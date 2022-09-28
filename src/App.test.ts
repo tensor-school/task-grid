@@ -6,6 +6,8 @@ const customConfig = { threshold: 0 };
 const toMatchImageSnapshot = configureToMatchImageSnapshot({
     customDiffConfig: customConfig,
     noColors: true,
+    failureThreshold: 0.08,
+    failureThresholdType: 'percent'
 });
 
 let browser: Browser;
