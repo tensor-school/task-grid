@@ -2,7 +2,7 @@
 
 exports[`Grid Верстка не тронута 1`] = `
 "
-        <section class=\\"grid-container\\">
+        <section class="grid-container">
             <div></div>
             <div></div>
             <div></div>
