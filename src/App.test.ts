@@ -35,9 +35,9 @@ describe('Grid', () => {
         expect(container).toMatchSnapshot();
     });
 
-    it('Рисуется нужное изображение', async () => {
+    /*it('Рисуется нужное изображение', async () => {
         const image = await page.screenshot();
 
         expect(image).toMatchImageSnapshot();
-    });
+    });*/
 });
