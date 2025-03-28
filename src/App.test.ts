@@ -1,43 +1,14 @@
-import { configureToMatchImageSnapshot } from 'jest-image-snapshot';
-import puppeteer, { Page, Browser } from 'puppeteer';
+import { test, expect } from '@playwright/test';
 import path from 'path';
 
-const customConfig = { threshold: 0 };
-const toMatchImageSnapshot = configureToMatchImageSnapshot({
-    customDiffConfig: customConfig,
-    noColors: true,
+test('Рисуется нужное изображение', async ({ page }) => {
+    await page.goto(`file:${path.join(__dirname, '/..', 'index.html')}`);
+    await expect(page).toHaveScreenshot();
 });
 
-let browser: Browser;
+test('Верстка не тронута', async ({ page }) => {
+    await page.goto(`file:${path.join(__dirname, '/..', 'index.html')}`);
+    const container = await page.evaluate(() => document.body.innerHTML);
 
-beforeAll(async () => {
-    browser = await puppeteer.launch({
-        args: ['--no-sandbox'],
-    });
-});
-
-afterAll(async () => {
-    await browser.close();
-});
-
-expect.extend({ toMatchImageSnapshot });
-
-describe('Grid', () => {
-    let page: Page;
-    beforeEach(async () => {
-        page = await browser.newPage();
-        await page.goto(`file:${path.join(__dirname, '/..', 'index.html')}`);
-    });
-
-    it('Верстка не тронута', async () => {
-        const container = await page.evaluate(() => document.body.innerHTML);
-
-        expect(container).toMatchSnapshot();
-    });
-
-    /*it('Рисуется нужное изображение', async () => {
-        const image = await page.screenshot();
-
-        expect(image).toMatchImageSnapshot();
-    });*/
+    expect(container).toMatchSnapshot();
 });
